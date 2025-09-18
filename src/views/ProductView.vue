@@ -15,7 +15,8 @@ import { ref } from 'vue'
             <div class="col-6 offset-1">
                 <h2 class="fs-3 fw-bold" id="title">Video Title</h2>
                 <div class="info-image-card-wrapper mt-2">
-                     <img class="info-image" src="../assets/image2.png" alt="Image 2">
+                     <!-- <img class="info-image" src="../assets/image2.png" alt="Image 2"> -->
+                      <iframe width="560" height="315" src="https://www.youtube.com/embed/uIatCAvom6Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
             </div>
             <div class="col-1 d-flex justify-content-center align-items-center">

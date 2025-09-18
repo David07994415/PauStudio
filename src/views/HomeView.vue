@@ -1,11 +1,52 @@
 <script setup>
-// import HeaderPart from '../components/Header.vue'
-import { TopProducts} from '../assets/globalData'
-import { ref } from 'vue'
-
+import { TopProducts,Categories} from '../assets/globalData'
+import { RouterLink, RouterView } from 'vue-router'
+import { ref,onMounted } from 'vue'
 
 const topProds = ref([...TopProducts]);
-console.log(topProds.value)
+const categories = ref([...Categories]);
+const isShowTopProds = ref(true);
+const isShowLeftBtn = ref(false);
+const isShowRightBtn = ref(true);
+const tracker = ref(null);
+const scrollAmount = 300;
+
+function ShowTopProds(){
+    isShowTopProds.value = true;
+}
+
+function ShowCategories(){
+    isShowTopProds.value = false;
+}
+
+function ClickLeftBtn(){
+    tracker.value?.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+}
+
+function ClickRightBtn(){
+    tracker.value?.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+}
+
+function updateButtons() {
+  const el = tracker.value;
+  console.log(el);
+  if (!el) return;
+
+  const trackerRect = el.getBoundingClientRect();
+  const lastCard = el.lastElementChild;
+  const lastCardRect = lastCard?.getBoundingClientRect();
+
+  const tolerance = 5;
+
+  isShowLeftBtn.value = el.scrollLeft > tolerance;
+  isShowRightBtn.value = lastCardRect?.right > trackerRect.right + tolerance;
+}
+
+onMounted(() => {
+  updateButtons();
+
+  tracker.value?.addEventListener('scroll', updateButtons);
+});
 
 
 
@@ -29,20 +70,33 @@ console.log(topProds.value)
         </section>
         <section class="cards-section d-flex flex-column justify-content-center gap-2 my-5" id="cards-section">
             <div class="cards-category d-flex justify-content-center align-items-center gap-2">
-                <h3 class="fs-4 active" id="title">精選作品</h3>
+                <h3 @click="ShowTopProds" 
+                    :class="{'fs-4':true,'active':isShowTopProds}" 
+                    id="title"
+                    >精選作品</h3>
                 <span>|</span>
-                <h3 class="fs-4 ">作品分類</h3>
+                <h3 @click="ShowCategories" 
+                    :class="{'fs-4':true,'active':!isShowTopProds}" 
+                    >作品分類</h3>
             </div>
             <div class="cards-wrapper">
-                <button class="carousel-btn left">&#10094;</button>
-                <div class="cards-tracker">
+                <button @click="ClickLeftBtn" v-show="isShowLeftBtn" class="carousel-btn left">&#10094;</button>
+                <div v-if="isShowTopProds" ref="tracker" class="cards-tracker">
                     <div v-for="topProd in topProds" :key="topProd" class="card-item">
-                        <a href="detail.html">
-                            <img class="card-image" :src="`https://i.ytimg.com/vi/${topProd}/maxresdefault.jpg`" alt="Image">
-                        </a>
+                        <RouterLink to="/product">
+                             <img class="card-image" :src="`https://i.ytimg.com/vi/${topProd}/maxresdefault.jpg`" alt="Image">
+                        </RouterLink>
                     </div>
                 </div>
-                <button class="carousel-btn right">&#10095;</button>
+                <div v-if="!isShowTopProds" ref="tracker" class="cards-tracker">
+                    <div v-for="category in categories" :key="category" class="card-item">
+                        <RouterLink to="/category">
+                            <img class="card-image" src="../assets/image2.png" alt="Image">
+                             <!-- <img class="card-image" :src="`https://i.ytimg.com/vi/${topProd}/maxresdefault.jpg`" alt="Image"> -->
+                        </RouterLink>
+                    </div>
+                </div>
+                <button  @click="ClickRightBtn" v-show="isShowRightBtn"  class="carousel-btn right">&#10095;</button>
             </div>
         </section>
     </main>

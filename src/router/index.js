@@ -23,4 +23,13 @@ const router = createRouter({
   ],
 })
 
+// ✅ 加入 View Transition 的導航守衛
+router.beforeEach((to, from, next) => {
+  if (document.startViewTransition) {
+    document.startViewTransition(() => next());
+  } else {
+    next();
+  }
+});
+
 export default router

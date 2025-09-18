@@ -14,6 +14,17 @@ export const TopProducts = [
     "1qtx-oOWijA",
 ]
 
+export const Categories = [
+    "Commercial",
+    "Corporate",
+    "Brand",
+    "Event",
+    "Portrait",
+    "Animation",
+]
+
+
+
 // 全域設定
 export const config = {
     theme: 'dark',
