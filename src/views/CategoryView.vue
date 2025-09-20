@@ -1,0 +1,124 @@
+<script setup>
+import IntroCard from '../components/IntroCard.vue'
+import BtnItem from '../components/BtnItem.vue'
+import CategoryImgCard from '../components/CategoryImgCard.vue'
+import { Categories } from '../assets/globalData'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
+import { ref, onMounted, watch } from 'vue'
+
+const route = useRoute();
+const router = useRouter()
+const simplifiedCategories = Categories.map(({ type, nameEn, nameCh, desc }) => ({ type, nameEn, nameCh, desc }));
+
+const videoId = ref('');
+const category = ref('');
+const categoryName = ref('');
+const isShowOneCategory = ref(false);
+const seletedCategoryProducts = ref([]);
+
+function chooseCategory(item) {
+    const checkeCategory = Categories.find(c => c.type === item.type);
+    if (!checkeCategory) {
+        isShowOneCategory.value = false;
+        return;
+    }
+
+    isShowOneCategory.value = true;
+    seletedCategoryProducts.value = checkeCategory.products;
+    category.value = checkeCategory.type;
+}
+
+
+onMounted(() => {
+    if (route.query.type) {
+        const checkeCategory = Categories.find(item => item.type === route.query.type);
+        if (!checkeCategory) {
+            router.push('/');
+        }
+        isShowOneCategory.value = true;
+        seletedCategoryProducts.value = checkeCategory.products;
+        category.value = route.query.type;
+    }
+});
+
+</script>
+
+<template>
+    <main class="container mt-5">
+        <IntroCard :head="'Pau Studio - 泡創影音'" :title="'作品分類'" :content="'提供多元影音技術服務'" />
+        <section v-if="isShowOneCategory" class="d-flex flex-column justify-content-center align-items-center my-5 fade-in-effect">
+            <div class="d-flex flex-row flex-wrap justify-content-center align-items-start gap-sm-3 gap-1 my-3">
+                <BtnItem v-for="cate in simplifiedCategories" :key="cate.type" @btnClick="chooseCategory(cate)"
+                    :is-active="cate.type == category" :text="cate.nameCh" />
+            </div>
+            <div
+                class="d-flex flex-column flex-wrap flex-sm-row justify-content-center align-items-start ps-0 ps-sm-5 gap-3 gap-sm-0">
+                <div v-for="product in seletedCategoryProducts" :key="product"
+                    class="card-item-wrapper d-flex flex-column justify-content-start align-items-starts col-12 col-sm-4">
+                    <div class="card-item-image-wrapper">
+                        <img class="card-image" :src="`https://i.ytimg.com/vi/${product}/maxresdefault.jpg`"
+                            alt="Image">
+                    </div>
+                    <!-- <p class="pt-2 card-name">{{ product }}</p> -->
+                </div>
+            </div>
+        </section>
+        <section v-if="!isShowOneCategory" class="row my-5 fade-in-effect">
+            <div
+                class="d-flex flex-column flex-wrap flex-sm-row justify-content-center align-items-center  gap-3 gap-sm-0">
+                <div v-for="category in simplifiedCategories" :key="category.type" @click="chooseCategory(category)"
+                    class="card-item-wrapper d-flex flex-column justify-content-center  align-items-center  col-12 col-sm-4">
+                    <div class="card-item-image-wrapper">
+                        <CategoryImgCard 
+                        :name-ch="category.nameCh"
+                        :name-en="category.nameEn"
+                        :type="category.type"
+                         />
+                    </div>
+                    <!-- <p class="pt-2 card-name">{{ category.nameEn }}</p>
+                    <p class="pt-1 card-desc">{{ category.desc }}</p> -->
+                </div>
+            </div>
+        </section>
+    </main>
+</template>
+
+<style scoped>
+.card-item-wrapper {
+    padding: 1rem;
+}
+
+.card-item-image-wrapper {
+    position: relative;
+    max-width: 360px;
+    scroll-snap-align: start;
+    transition: all 0.5s ease-in-out;
+}
+
+.card-item-image-wrapper img {
+    width: 100%;
+}
+
+.card-item-image-wrapper:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.card-name {
+    color: var(--main-word-color);
+    font-weight: 700;
+}
+
+.card-desc {
+    color: var(--sub-word-color);
+}
+
+
+/* 手機尺寸（小於 576px） */
+@media (max-width: 575.98px) {
+    .card-item-image-wrapper{
+
+    }
+}
+
+</style>

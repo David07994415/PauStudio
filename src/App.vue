@@ -6,7 +6,6 @@ import HeaderPart from './components/Header.vue'
 <template>
   <HeaderPart />
   <RouterView />
-  
 </template>
 
 <style scoped>
