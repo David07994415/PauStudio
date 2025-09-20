@@ -46,7 +46,8 @@ onMounted(() => {
 <template>
     <main class="container mt-5">
         <IntroCard :head="'Pau Studio - 泡創影音'" :title="'作品分類'" :content="'提供多元影音技術服務'" />
-        <section v-if="isShowOneCategory" class="d-flex flex-column justify-content-center align-items-center my-5 fade-in-effect">
+        <section v-if="isShowOneCategory"
+            class="d-flex flex-column justify-content-center align-items-center my-5 fade-in-effect">
             <div class="d-flex flex-row flex-wrap justify-content-center align-items-start gap-sm-3 gap-1 my-3">
                 <BtnItem v-for="cate in simplifiedCategories" :key="cate.type" @btnClick="chooseCategory(cate)"
                     :is-active="cate.type == category" :text="cate.nameCh" />
@@ -55,10 +56,19 @@ onMounted(() => {
                 class="d-flex flex-column flex-wrap flex-sm-row justify-content-center align-items-start ps-0 ps-sm-5 gap-3 gap-sm-0">
                 <div v-for="product in seletedCategoryProducts" :key="product"
                     class="card-item-wrapper d-flex flex-column justify-content-start align-items-starts col-12 col-sm-4">
-                    <div class="card-item-image-wrapper">
+
+                    <RouterLink :to="{ path: '/product', query: { videoId: product, category: category } }">
+
+                        <div class="card-item-image-wrapper">
+                            <img class="card-image" :src="`https://i.ytimg.com/vi/${product}/maxresdefault.jpg`"
+                                alt="Image">
+                        </div>
+                    </RouterLink>
+
+                    <!-- <div class="card-item-image-wrapper">
                         <img class="card-image" :src="`https://i.ytimg.com/vi/${product}/maxresdefault.jpg`"
                             alt="Image">
-                    </div>
+                    </div> -->
                     <!-- <p class="pt-2 card-name">{{ product }}</p> -->
                 </div>
             </div>
@@ -69,11 +79,7 @@ onMounted(() => {
                 <div v-for="category in simplifiedCategories" :key="category.type" @click="chooseCategory(category)"
                     class="card-item-wrapper d-flex flex-column justify-content-center  align-items-center  col-12 col-sm-4">
                     <div class="card-item-image-wrapper">
-                        <CategoryImgCard 
-                        :name-ch="category.nameCh"
-                        :name-en="category.nameEn"
-                        :type="category.type"
-                         />
+                        <CategoryImgCard :name-ch="category.nameCh" :name-en="category.nameEn" :type="category.type" />
                     </div>
                     <!-- <p class="pt-2 card-name">{{ category.nameEn }}</p>
                     <p class="pt-1 card-desc">{{ category.desc }}</p> -->
@@ -115,10 +121,9 @@ onMounted(() => {
 
 
 /* 手機尺寸（小於 576px） */
-@media (max-width: 575.98px) {
+/* @media (max-width: 575.98px) {
     .card-item-image-wrapper{
 
     }
-}
-
+} */
 </style>

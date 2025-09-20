@@ -51,8 +51,8 @@ function updateButtons() {
 }
 
 function getLogoImagePath(name) {
-    const baseUrl = import.meta.url;
-    return new URL(`../assets/logoImg/${name}`, baseUrl).href;
+    // const baseUrl = import.meta.url;
+    return new URL(`../assets/logoImg/${name}`, import.meta.url).href;
 }
 
 onMounted(() => {
