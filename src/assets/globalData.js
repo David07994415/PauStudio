@@ -99,7 +99,7 @@ export const Categories = [
         ]
     },
     {
-        type: "Portrait", nameEn: "Portrait & BTS 人物｜側拍", nameCh: "人物｜側拍", desc: "類型描述", products: [
+        type: "Portrait", nameEn: "Portrait & BTS", nameCh: "人物｜側拍", desc: "類型描述", products: [
             "Sx_3k-vnpwI",
             "o5tZGcA94wQ",
             "3qG9XWneQ1g",
