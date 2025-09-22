@@ -68,7 +68,7 @@ onMounted(async () => {
         <section
             class="offset-1 iframe-section d-flex justify-content-start align-items-start flex-sm-row flex-column my-4 gap-3">
             <div class="p-0 col-10 col-sm-6">
-                <h2 class="fs-3 fw-bold" id="title">{{videoTitle}}</h2>
+                <!-- <h2 class="fs-3 fw-bold" id="title">{{videoTitle}}</h2> -->
                 <div class="iframe-wrapper mt-2 ratio ratio-16x9">
                     <!-- width="560" height="315" -->
                     <iframe :src="`https://www.youtube.com/embed/${videoId}`" title="YouTube video player" frameborder="0"
@@ -77,7 +77,7 @@ onMounted(async () => {
                 </div>
             </div>
             <div class="info-text-wrapper col-10 col-sm-4 fade-in-effect">
-                <h3 class="fs-5 fw-bold">作品資訊</h3>
+                <h3 class="fs-5 fw-bold" id="title">{{videoTitle}}</h3>
                 <p class="fs-6 mt-3">{{ videoDesc }}</p>
             </div>
         </section>
@@ -96,7 +96,7 @@ onMounted(async () => {
 
 <style scoped>
 .iframe-wrapper {
-    max-width: 560px;
+    max-width: 1080px;
 }
 
 .info-text-wrapper {
