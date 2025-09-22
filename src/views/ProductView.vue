@@ -57,10 +57,10 @@ onMounted(async () => {
 </script>
 
 <template>
-    <main class="container-fluid p-0 mt-5">
+    <main class="container-fluid mt-5">
         <section class="back-section row">
-            <div class="d-flex justify-content-start align-items-center gap-1 p-0">
-                <RouterLink class="offset-1" to="/">&#10094; Back to Home</RouterLink>
+            <div class="offset-1 col-11 justify-content-start align-items-center gap-1 p-0">
+                <RouterLink to="/">< Back to Home</RouterLink>
                 <span> / </span>
                 <RouterLink :to="{ path: '/category', query: { type: category } }">{{ categoryName }}</RouterLink>
             </div>
@@ -71,7 +71,7 @@ onMounted(async () => {
                 <h2 class="fs-3 fw-bold" id="title">{{videoTitle}}</h2>
                 <div class="iframe-wrapper mt-2 ratio ratio-16x9">
                     <!-- width="560" height="315" -->
-                    <iframe src="https://www.youtube.com/embed/uIatCAvom6Q" title="YouTube video player" frameborder="0"
+                    <iframe :src="`https://www.youtube.com/embed/${videoId}`" title="YouTube video player" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>

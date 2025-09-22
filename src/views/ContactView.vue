@@ -9,7 +9,7 @@ import { ref,onMounted } from 'vue'
     <main class="container mt-5">
         <IntroCard :head="'Pau Studio - 泡創影音'" :title="'聯繫資訊'" />
         <section class="row">
-            <ContactInfo class="offset-1" />
+            <ContactInfo class="col-11 offset-1" />
         </section>
     </main>
 </template>

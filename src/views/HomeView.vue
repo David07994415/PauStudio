@@ -5,7 +5,7 @@ import ContactInfo from '../components/ContactInfo.vue'
 import IntroCard from '../components/IntroCard.vue'
 
 import { TopProducts, Categories, LogoSlider_First, LogoSlider_Second } from '../assets/globalData'
-import { RouterLink, RouterView } from 'vue-router'
+import { routeLocationKey, RouterLink, RouterView } from 'vue-router'
 import { ref, onMounted } from 'vue'
 
 const topProds = ref([...TopProducts]);
@@ -81,11 +81,14 @@ onMounted(() => {
                 “Edit Text” or double click me to add your own content and make changes to the font</p>
             <button class="mt-3 btn btn-secondary d-none d-lg-block">Learn More > </button>
         </section> -->
-        <section class="cards-section d-flex flex-column justify-content-center gap-2 my-5 fade-in-effect " id="cards-section">
+        <section class="cards-section d-flex flex-column justify-content-center gap-2 my-5 fade-in-effect "
+            id="cards-section">
             <div class="cards-category d-flex justify-content-center align-items-center gap-2">
                 <h3 @click="ShowTopProds" :class="{ 'fs-4': true, 'active': isShowTopProds }" id="title">精選作品</h3>
                 <span class='fs-4'>|</span>
-                <h3 @click="ShowCategories" :class="{ 'fs-4': true, 'active': !isShowTopProds }">作品分類</h3>
+                <RouterLink to="/category">
+                    <h3 :class="{ 'fs-4': true, 'active': !isShowTopProds }">作品分類</h3>
+                </RouterLink>
             </div>
             <div class="cards-wrapper">
                 <button @click="ClickLeftBtn" v-show="isShowLeftBtn" class="carousel-btn left">&#10094;</button>
@@ -263,11 +266,6 @@ span {
     font-weight: 700;
     margin-bottom: 0.5rem
 }
+
 /* Section Brand */
-
-
-
-
-
-
 </style>
