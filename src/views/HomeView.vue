@@ -93,19 +93,19 @@ onMounted(() => {
             <div class="cards-wrapper">
                 <button @click="ClickLeftBtn" v-show="isShowLeftBtn" class="carousel-btn left">&#10094;</button>
                 <div v-if="isShowTopProds" ref="tracker" class="cards-tracker">
-                    <div v-for="topProd in topProds" :key="topProd.videoId" class="card-item">
+                    <div v-for="(topProd,index) in topProds" :key="topProd.videoId" class="card-item">
                         <RouterLink
                             :to="{ path: '/product', query: { videoId: topProd.videoId, category: topProd.type } }">
-                            <img class="card-image" :src="`https://i.ytimg.com/vi/${topProd.videoId}/maxresdefault.jpg`"
+                            <img :class="['card-image', {'custom-position': index === 7 }]" :src="`https://i.ytimg.com/vi/${topProd.videoId}/maxresdefault.jpg`"
                                 alt="Image">
                         </RouterLink>
                     </div>
                 </div>
                 <div v-if="!isShowTopProds" ref="tracker" class="cards-tracker">
-                    <div v-for="category in categories" :key="category.type" class="card-item">
+                    <div v-for="(category,index) in categories" :key="category.type" class="card-item">
                         <RouterLink :to="{ path: '/category', query: { type: category.type } }">
                             <CategoryImgCard :name-ch="category.nameCh" :name-en="category.nameEn"
-                                :type="category.type" />
+                            :type="category.type"/>
                         </RouterLink>
                     </div>
                 </div>
@@ -192,16 +192,36 @@ span {
     padding: 1rem;
     flex: 0 0 auto;
     /* 不縮放、不撐滿，保持原始寬度 */
-    max-width: 300px;
+    max-width: 400px;
     /* 或你想要的固定寬度 */
     scroll-snap-align: start;
     /* 搭配 scroll-snap 對齊 */
     transition: all 0.5s ease-in-out;
     position: relative;
+    aspect-ratio: 4 / 5;
+    /* 設定容器為 4:5 比例 */
+    overflow: hidden;
+}
+
+@media (max-width: 575.98px) {
+    .card-item {
+        padding: 0.1rem;
+        max-width: 120px;
+    }
 }
 
 .card-item img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* 裁切圖片以填滿容器 */
+    object-position: center;
+    /* 可調整裁切位置 */
+}
+
+
+.custom-position{
+    object-position: right !important;
 }
 
 .card-item:hover {
