@@ -2,9 +2,13 @@
 import IntroCard from '../components/IntroCard.vue'
 import BtnItem from '../components/BtnItem.vue'
 import CategoryImgCard from '../components/CategoryImgCard.vue'
-import { Categories } from '../assets/globalData'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { ref, onMounted, watch } from 'vue'
+// import { Categories } from '../assets/globalData'
+import { useVideoStore } from '../stores/video'
+
+const videoStore = useVideoStore()
+const Categories = videoStore.Categories
 
 const route = useRoute();
 const router = useRouter()
@@ -57,10 +61,10 @@ onMounted(() => {
                 <div v-for="product in seletedCategoryProducts" :key="product"
                     class="card-item-wrapper-product d-flex flex-column justify-content-start align-items-starts col-12 col-sm-4">
 
-                    <RouterLink :to="{ path: '/product', query: { videoId: product, category: category } }">
+                    <RouterLink :to="{ path: '/product', query: { videoId: product.videoId, category: category } }">
 
                         <div class="card-item-image-wrapper card-item-image-wrapper-border">
-                            <img class="card-image" :src="`https://i.ytimg.com/vi/${product}/maxresdefault.jpg`"
+                            <img class="card-image" :src="`https://i.ytimg.com/vi/${product.videoId}/maxresdefault.jpg`"
                                 alt="Image">
                             <div class="card-item-image-wrapper-overlay">
                                 <span><i class="bi bi-play-circle"></i> Play Video</span>

@@ -5,11 +5,14 @@ import ContactInfo from '../components/ContactInfo.vue'
 import IntroCard from '../components/IntroCard.vue'
 
 import { TopProducts, Categories, LogoSlider_First, LogoSlider_Second } from '../assets/globalData'
+import { useVideoStore } from '../stores/video'
 import { routeLocationKey, RouterLink, RouterView } from 'vue-router'
 import { ref, onMounted } from 'vue'
 
-const topProds = ref([...TopProducts]);
-const categories = ref([...Categories]);
+const videoStore = useVideoStore()
+const topProds = videoStore.TopProducts
+// const topProds = ref([...TopProducts]);
+// const categories = ref([...Categories]);
 const isShowTopProds = ref(true);
 const isShowLeftBtn = ref(false);
 const isShowRightBtn = ref(true);
@@ -84,7 +87,8 @@ onMounted(() => {
         <section class="cards-section d-flex flex-column justify-content-center gap-2 my-5 fade-in-effect "
             id="cards-section">
             <div class="cards-category d-flex justify-content-center align-items-center gap-2">
-                <h3 @click="ShowTopProds" :class="{ 'fs-4': true, 'active': isShowTopProds }" id="title">精選作品</h3>
+                <h3 @click="ShowTopProds" :class="{ 'fs-4': true, 'active': isShowTopProds }" >精選作品</h3>  
+                <!-- id="title" -->
                 <span class='fs-4'>|</span>
                 <RouterLink to="/category">
                     <h3 :class="{ 'fs-4': true, 'active': !isShowTopProds }">作品分類</h3>
@@ -96,19 +100,23 @@ onMounted(() => {
                     <div v-for="(topProd,index) in topProds" :key="topProd.videoId" class="card-item">
                         <RouterLink
                             :to="{ path: '/product', query: { videoId: topProd.videoId, category: topProd.type } }">
-                            <img :class="['card-image', {'custom-position': index === 7 }]" :src="`https://i.ytimg.com/vi/${topProd.videoId}/maxresdefault.jpg`"
+                            <img :class="['card-image', 
+                            {'custom-position-right': topProd.position === 'right',
+                             'custom-position-left': topProd.position === 'left'
+                            }
+                            ]" :src="`https://i.ytimg.com/vi/${topProd.videoId}/maxresdefault.jpg`"
                                 alt="Image">
                         </RouterLink>
                     </div>
                 </div>
-                <div v-if="!isShowTopProds" ref="tracker" class="cards-tracker">
+                <!-- <div v-if="!isShowTopProds" ref="tracker" class="cards-tracker">
                     <div v-for="(category,index) in categories" :key="category.type" class="card-item">
                         <RouterLink :to="{ path: '/category', query: { type: category.type } }">
                             <CategoryImgCard :name-ch="category.nameCh" :name-en="category.nameEn"
                             :type="category.type"/>
                         </RouterLink>
                     </div>
-                </div>
+                </div> -->
                 <button @click="ClickRightBtn" v-show="isShowRightBtn" class="carousel-btn right">&#10095;</button>
             </div>
         </section>
@@ -220,9 +228,14 @@ span {
 }
 
 
-.custom-position{
+.custom-position-right{
     object-position: right !important;
 }
+
+.custom-position-left{
+    object-position: left !important;
+}
+
 
 .card-item:hover {
     cursor: pointer;

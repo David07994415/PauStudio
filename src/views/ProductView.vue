@@ -1,10 +1,14 @@
 <script setup>
 import IntroCard from '../components/IntroCard.vue'
 import ContactInfo from '../components/ContactInfo.vue'
-import { Categories } from '../assets/globalData'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import axios from 'axios';
+// import { Categories } from '../assets/globalData'
+import { useVideoStore } from '../stores/video'
+
+const videoStore = useVideoStore()
+const Categories = videoStore.Categories
 
 const route = useRoute();
 const router = useRouter()
@@ -41,18 +45,27 @@ async function getYoutubeData(videoId) {
 onMounted(async () => {
     videoId.value = route.query.videoId;
     category.value = route.query.category;
-    const checkeCategory = simplifiedCategories.find(item => item.type === category.value);
+    const checkCategory = Categories.find(item => item.type === category.value);
 
-    if (!checkeCategory) {
+    console.log(checkCategory)
+    if (!checkCategory) {
         router.push('/');
     }
 
-    categoryName.value = checkeCategory.nameEn + ' ' + checkeCategory.nameCh;
+    categoryName.value = checkCategory.nameEn + ' ' + checkCategory.nameCh;
 
-    let result = await getYoutubeData(videoId.value);
-    if(result==false){
+    const checkVideo = checkCategory.products.find(item => item.videoId === videoId.value);
+    if(!checkVideo){
         router.push('/');
+    }else{
+        videoTitle.value = checkVideo.title ?? '';
+        videoDesc.value = checkVideo.desc ?? '';
     }
+
+    // let result = await getYoutubeData(videoId.value);
+    // if(result==false){
+    //     router.push('/');
+    // }
 });
 </script>
 
@@ -78,7 +91,7 @@ onMounted(async () => {
             </div>
             <div class="info-text-wrapper col-10 col-sm-4 fade-in-effect">
                 <h3 class="fs-5 fw-bold" id="title">{{videoTitle}}</h3>
-                <p class="fs-6 mt-3">{{ videoDesc }}</p>
+                <p class="fs-6 mt-3 line-breaker">{{ videoDesc }}</p>
             </div>
         </section>
 
@@ -130,5 +143,10 @@ onMounted(async () => {
     padding: 1rem;
     font-weight: 700;
     margin-bottom: 0.5rem
+}
+
+
+.line-breaker{
+    white-space: pre-line;
 }
 </style>

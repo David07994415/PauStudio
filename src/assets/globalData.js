@@ -1,17 +1,17 @@
 // 精選作品
 export const TopProducts = [
-    { videoId: "uIatCAvom6Q", type: "Event" },
-    { videoId: "cbtqPhIQXLg", type: "Commercial" },
-    { videoId: "pC2isw9fxXE", type: "Commercial" },
-    { videoId: "ypjRJWYOKUg", type: "Corporate" },
-    { videoId: "UMB0sR_m8e0", type: "Commercial" },
-    { videoId: "9C_U02GYv98", type: "Commercial" },
-    { videoId: "mak0U1g6708", type: "Corporate" },
-    { videoId: "tdgSLSaztTc", type: "Brand" },
-    { videoId: "B7m675DPbEA", type: "Brand" },
-    { videoId: "rUgL7fdnpgk", type: "Corporate" },
-    { videoId: "o8m7D_rj17g", type: "Corporate" },
-    { videoId: "1qtx-oOWijA", type: "Event" }
+    { videoId: "uIatCAvom6Q", type: "Event", position: 'center' },
+    { videoId: "cbtqPhIQXLg", type: "Commercial", position: 'center' },
+    { videoId: "pC2isw9fxXE", type: "Commercial", position: 'center' },
+    { videoId: "ypjRJWYOKUg", type: "Corporate", position: 'center' },
+    { videoId: "UMB0sR_m8e0", type: "Commercial", position: 'center' },
+    { videoId: "9C_U02GYv98", type: "Commercial", position: 'center' },
+    { videoId: "mak0U1g6708", type: "Corporate", position: 'center' },
+    { videoId: "tdgSLSaztTc", type: "Brand", position: 'right' },
+    { videoId: "B7m675DPbEA", type: "Brand", position: 'center' },
+    { videoId: "rUgL7fdnpgk", type: "Corporate", position: 'center' },
+    { videoId: "o8m7D_rj17g", type: "Corporate", position: 'center' },
+    { videoId: "1qtx-oOWijA", type: "Event", position: 'center' }
 ]
 
 // 作品分類
